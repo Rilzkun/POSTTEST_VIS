@@ -1,9 +1,13 @@
 ﻿Module DataBuku
-    Public buku(99) As String, genre(99) As String, n As Integer = 0 ' Tambah array genre
+    Public daftarJudul(99) As String
+    Public daftarGenre(99) As String
+    Public totalBuku As Integer = 0
 
-    Function Cari(ByVal j As String) As Integer ' Minimal 1 Function
-        For i = 0 To n - 1
-            If buku(i).ToLower() = j.ToLower() Then Return i
+    Function CariUrutanBuku(ByVal judulYangDicari As String) As Integer
+        For i As Integer = 0 To totalBuku - 1
+            If daftarJudul(i).ToLower() = judulYangDicari.ToLower() Then
+                Return i
+            End If
         Next
         Return -1
     End Function

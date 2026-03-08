@@ -1,29 +1,39 @@
 ﻿Public Class Form1
-    ' Procedure dengan argumen ByVal
-    Sub Tampil(ByVal m As String)
+    Sub SinkronkanTampilan(ByVal pesanInfo As String)
         ListBox1.Items.Clear()
-        For i = 0 To n - 1
-            ListBox1.Items.Add(buku(i) & " [" & genre(i) & "]") ' Gabung judul & genre
+        For i As Integer = 0 To totalBuku - 1
+            ListBox1.Items.Add(daftarJudul(i) & " - (" & daftarGenre(i) & ")")
         Next
-        If m <> "" Then MsgBox(m)
+        If pesanInfo <> "" Then MsgBox(pesanInfo)
     End Sub
 
     Private Sub btnTambah_Click(sender As Object, e As EventArgs) Handles btnTambah.Click
-        If txtTambah.Text = "" Or txtGenre.Text = "" Then Exit Sub
-        buku(n) = txtTambah.Text : genre(n) = txtGenre.Text : n += 1 ' Simpan ke kedua array
-        Tampil("Tambah Berhasil") : txtTambah.Clear() : txtGenre.Clear()
+        If txtTambah.Text = "" Or txtGenre.Text = "" Then
+            MsgBox("Judul dan Genre harus diisi!")
+            Exit Sub
+        End If
+
+        daftarJudul(totalBuku) = txtTambah.Text
+        daftarGenre(totalBuku) = txtGenre.Text
+        totalBuku += 1
+
+        SinkronkanTampilan("Buku Berhasil Ditambahkan!")
+        txtTambah.Clear() : txtGenre.Clear()
     End Sub
 
     Private Sub btnHapus_Click(sender As Object, e As EventArgs) Handles btnHapus.Click
-        Dim p = Cari(txtHapus.Text) ' Cari berdasarkan judul
-        If p <> -1 Then
-            ' Geser kedua array agar data tetap sinkron
-            For i = p To n - 2
-                buku(i) = buku(i + 1) : genre(i) = genre(i + 1)
+        Dim indexKetemu As Integer = CariUrutanBuku(txtHapus.Text)
+
+        If indexKetemu <> -1 Then
+            For i As Integer = indexKetemu To totalBuku - 2
+                daftarJudul(i) = daftarJudul(i + 1)
+                daftarGenre(i) = daftarGenre(i + 1)
             Next
-            n -= 1 : Tampil("Hapus Berhasil") : txtHapus.Clear()
-        Else : MsgBox("Tidak ada") : End If
+            totalBuku -= 1
+            SinkronkanTampilan("Buku Berhasil Dihapus!")
+            txtHapus.Clear()
+        Else
+            MsgBox("Maaf, judul buku tidak ditemukan.")
+        End If
     End Sub
-
-
 End Class
