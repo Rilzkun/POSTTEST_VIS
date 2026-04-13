@@ -1,10 +1,9 @@
 ﻿Module ValidationModule
     Public Sub HanyaAngka(e As KeyPressEventArgs)
-        ' Jika karakter yang ditekan adalah angka atau tombol kontrol (seperti Backspace)
         If Char.IsDigit(e.KeyChar) OrElse Char.IsControl(e.KeyChar) Then
-            e.Handled = False ' Biarkan karakter diproses
+            e.Handled = False
         Else
-            e.Handled = True ' Tolak karakter (tidak akan muncul di TextBox)
+            e.Handled = True
         End If
-    End Sub ' Pastikan ada spasi antara End dan Sub
+    End Sub
 End Module

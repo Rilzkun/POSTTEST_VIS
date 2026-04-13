@@ -1,7 +1,6 @@
 ﻿Imports MySqlConnector
 
 Public Class Form1
-    ' Prosedur pendukung untuk efisiensi kode
     Sub TampilData()
         dgvAlat.DataSource = GetAlatMusik()
     End Sub
@@ -14,12 +13,10 @@ Public Class Form1
         txtIdAlat.Focus()
     End Sub
 
-    ' Event saat form pertama kali terbuka
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TampilData()
     End Sub
 
-    ' Fitur Simpan (Create)
     Private Sub btnSimpan_Click(sender As Object, e As EventArgs) Handles btnSimpan.Click
         If txtIdAlat.Text = "" Or txtNamaAlat.Text = "" Then
             MessageBox.Show("ID dan Nama Alat wajib diisi!", "Peringatan")
@@ -41,7 +38,6 @@ Public Class Form1
         End If
     End Sub
 
-    ' Fitur Ubah (Update)
     Private Sub btnUbah_Click(sender As Object, e As EventArgs) Handles btnUbah.Click
         Dim query As String = "UPDATE tb_alat_musik SET nama_alat=@nama, merk=@merk, stok=@stok WHERE id_alat=@id"
         Dim params As MySqlParameter() = {
@@ -58,7 +54,6 @@ Public Class Form1
         End If
     End Sub
 
-    ' Fitur Hapus (Delete)
     Private Sub btnHapus_Click(sender As Object, e As EventArgs) Handles btnHapus.Click
         If txtIdAlat.Text <> "" Then
             Dim respon = MessageBox.Show("Hapus data " & txtNamaAlat.Text & "?", "Konfirmasi", MessageBoxButtons.YesNo)
@@ -72,18 +67,15 @@ Public Class Form1
         End If
     End Sub
 
-    ' Fitur Batal
     Private Sub btnBatal_Click(sender As Object, e As EventArgs) Handles btnBatal.Click
         KosongkanForm()
         TampilData()
     End Sub
 
-    ' Fitur Cari (Search) - Sesuai syarat Posttest-5
     Private Sub txtCari_TextChanged(sender As Object, e As EventArgs) Handles txtCari.TextChanged
         dgvAlat.DataSource = GetAlatMusik(txtCari.Text)
     End Sub
 
-    ' Event saat baris tabel diklik
     Private Sub dgvAlat_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvAlat.CellClick
         Try
             If e.RowIndex >= 0 Then
@@ -97,7 +89,6 @@ Public Class Form1
         End Try
     End Sub
 
-    ' Validasi input stok (Hanya Angka)
     Private Sub txtStok_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtStok.KeyPress
         If Not Char.IsNumber(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
             e.Handled = True
